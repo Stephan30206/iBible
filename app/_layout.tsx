@@ -17,8 +17,8 @@ function TabIcon({ name, nameActive, label, focused }: TabIconProps) {
     <View style={styles.tabItem}>
       <Ionicons
         name={focused ? nameActive : name}
-        size={24}
-        color={focused ? COLORS.tabActive : COLORS.tabInactive}
+        size={22}
+        color={focused ? COLORS.primary : COLORS.tabInactive}
       />
       <Text style={[styles.tabLabel, focused && styles.tabLabelActive]}>
         {label}
@@ -120,23 +120,23 @@ const styles = StyleSheet.create({
     borderTopColor: COLORS.border,
     borderTopWidth: 1,
     height: Platform.OS === 'ios' ? 85 : 70,
-    paddingTop: 8,
-    paddingBottom: Platform.OS === 'ios' ? 24 : 10,
-    elevation: 8,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: -2 },
-    shadowOpacity: 0.06,
+    paddingTop: 10,
+    paddingBottom: Platform.OS === 'ios' ? 24 : 12,
+    elevation: 12,
+    shadowColor: COLORS.primary,
+    shadowOffset: { width: 0, height: -4 },
+    shadowOpacity: 0.1,
     shadowRadius: 8,
   },
   tabItem: {
     alignItems: 'center',
-    gap: 3,
+    gap: 4,
   },
   tabLabel: {
-    fontSize: 10,
+    fontSize: 11,
     color: COLORS.tabInactive,
     fontWeight: '500',
-    marginTop: 1,
+    marginTop: 2,
   },
   tabLabelActive: {
     color: COLORS.tabActive,
