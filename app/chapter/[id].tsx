@@ -74,7 +74,7 @@ export default function ChapterScreen() {
       <SafeAreaView style={styles.safe}>
         <View style={styles.navBar}>
           <TouchableOpacity onPress={() => router.back()} style={styles.navIconBtn}>
-            <Ionicons name="arrow-back" size={24} color={COLORS.textPrimary} />
+            <Ionicons name="arrow-back" size={24} color={COLORS.white} />
           </TouchableOpacity>
           <Text style={styles.navTitle}>Erreur</Text>
           <View style={{ width: 40 }} />
@@ -103,7 +103,7 @@ export default function ChapterScreen() {
       {/* ── Top Nav ── */}
       <View style={styles.navBar}>
         <TouchableOpacity onPress={() => router.back()} style={styles.navIconBtn}>
-          <Ionicons name="arrow-back" size={24} color={COLORS.textPrimary} />
+          <Ionicons name="arrow-back" size={24} color={COLORS.white} />
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -121,7 +121,7 @@ export default function ChapterScreen() {
             `${chapter.verses.length} versets\n${book.category}`
           )}
         >
-          <Ionicons name="information-circle-outline" size={24} color={COLORS.textSecondary} />
+          <Ionicons name="information-circle-outline" size={24} color={COLORS.white} />
         </TouchableOpacity>
       </View>
 
@@ -176,19 +176,22 @@ const styles = StyleSheet.create({
   navBar: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: COLORS.surface,
+    backgroundColor: COLORS.primary,
     paddingHorizontal: SIZES.s3,
     paddingVertical: SIZES.s2,
-    borderBottomWidth: 1,
-    borderBottomColor: COLORS.borderLight,
+    shadowColor: COLORS.primary,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.08,
+    shadowRadius: 4,
+    elevation: 3,
   },
   navIconBtn: {
     width: 44,
     height: 44,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: SIZES.radius,
-    backgroundColor: COLORS.surfaceAlt,
+    borderRadius: SIZES.radiusMd,
+    backgroundColor: 'rgba(255,255,255,0.15)',
   },
   navCenter: {
     flex: 1,
@@ -196,9 +199,9 @@ const styles = StyleSheet.create({
     paddingVertical: SIZES.s1,
   },
   navBook: {
-    fontSize: SIZES.sm,
+    fontSize: SIZES.xs,
     color: COLORS.accent,
-    fontWeight: '700',
+    fontWeight: '600',
     textTransform: 'uppercase',
     letterSpacing: 0.8,
   },
@@ -211,39 +214,36 @@ const styles = StyleSheet.create({
   },
   navChapter: {
     fontSize: SIZES.lg,
-    fontFamily: FONTS.serif,
-    color: COLORS.textPrimary,
+    color: COLORS.white,
     fontWeight: '700',
-    marginTop: 1,
+    marginTop: 2,
   },
 
   verseList: { paddingBottom: 24 },
 
   chapterBanner: {
     alignItems: 'center',
-    paddingVertical: SIZES.s6,
+    paddingVertical: SIZES.s5,
     paddingHorizontal: SIZES.s4,
     backgroundColor: COLORS.surface,
     borderBottomWidth: 1,
-    borderBottomColor: COLORS.borderLight,
-    marginBottom: SIZES.s1,
+    borderBottomColor: COLORS.border,
   },
   bannerBook: {
     fontSize: SIZES.xs,
-    color: COLORS.accent,
-    fontWeight: '800',
-    letterSpacing: 2.5,
-    marginBottom: 6,
+    color: COLORS.primary,
+    fontWeight: '700',
+    letterSpacing: 1.5,
+    marginBottom: 8,
+    textTransform: 'uppercase',
   },
   bannerChapter: {
     fontSize: SIZES.xxxl,
-    fontFamily: FONTS.serif,
     color: COLORS.textPrimary,
     fontWeight: '700',
-    fontStyle: 'italic',
   },
   bannerLine: {
-    width: 36,
+    width: 40,
     height: 2,
     backgroundColor: COLORS.accent,
     borderRadius: 1,
@@ -253,6 +253,7 @@ const styles = StyleSheet.create({
     fontSize: SIZES.xs,
     color: COLORS.textMuted,
     textAlign: 'center',
+    fontWeight: '400',
   },
 
 
@@ -265,7 +266,6 @@ const styles = StyleSheet.create({
   },
   errorTitle: {
     fontSize: SIZES.xl,
-    fontFamily: FONTS.serif,
     color: COLORS.textPrimary,
     fontWeight: '700',
     marginTop: SIZES.s4,
@@ -279,10 +279,10 @@ const styles = StyleSheet.create({
   },
   errorBtn: {
     marginTop: SIZES.s5,
-    backgroundColor: COLORS.accent,
+    backgroundColor: COLORS.primary,
     paddingHorizontal: SIZES.s5,
     paddingVertical: SIZES.s3,
-    borderRadius: SIZES.radiusFull,
+    borderRadius: SIZES.radiusLg,
   },
   errorBtnText: {
     color: COLORS.white,
