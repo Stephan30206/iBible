@@ -4,45 +4,56 @@ import { Platform } from 'react-native';
 // COLOR PALETTE
 // ====================================
 export const COLORS = {
-  // Primary & Accent
-  accent: '#C77A3B',           // Warm brown/terracotta
-  accentLight: '#E8A870',      // Light warm accent
-  accentSurface: '#FBF6F1',    // Light surface with accent tone
-  accentBorder: '#E8D0C0',     // Subtle border with accent tone
-  
-  // Text Colors
-  textPrimary: '#1F2937',      // Main text - dark charcoal
+  // Primary & Accent - Banking Style
+  primary: '#5B3BD6',          // Deep purple - primary
+  primaryLight: '#7B5FE8',     // Light purple
+  primaryDark: '#4A2DB5',      // Dark purple
+  accent: '#00C9D7',           // Cyan/Turquoise accent
+  accentLight: '#4CDFE8',      // Light cyan
+  accentSurface: '#E8F8FF',    // Light cyan surface
+  accentBorder: '#A0E8F0',     // Cyan border
+
+  // Text Colors - Professional
+  textPrimary: '#1A1A2E',      // Main text - very dark
   textSecondary: '#6B7280',    // Secondary text - gray
   textMuted: '#9CA3AF',        // Muted text - lighter gray
   textLight: '#D1D5DB',        // Light text - very light gray
-  
-  // Background & Surface
-  background: '#FEFDFB',       // Off-white background
+  textInverted: '#FFFFFF',     // White text for dark backgrounds
+
+  // Background & Surface - Clean & Professional
+  background: '#F8F9FB',       // Clean light background
   surface: '#FFFFFF',          // White surface
   surfaceAlt: '#F3F4F6',       // Alternative surface - light gray
+  surfaceDark: '#2D2E3F',      // Dark surface for cards on dark bg
   surfaceHover: '#F9FAFB',     // Hover state surface
-  
+
   // Borders & Dividers
   border: '#E5E7EB',           // Standard border
   borderLight: '#F3F4F6',      // Light border
   borderDark: '#D1D5DB',       // Dark border
-  
+
   // Neutral
   white: '#FFFFFF',
   black: '#000000',
-  
-  // Tab colors
-  tabBg: '#FFFFFF',
-  tabActive: '#C77A3B',        // Same as accent
-  tabInactive: '#9CA3AF',      // Same as textMuted
 
-  // Testament colors
-  oldTestament: '#8B4513',     // Saddle brown
-  oldTestamentBg: '#FBF1E8',   // Light brown
-  oldTestamentBorder: '#D4A574', // Medium brown
-  newTestament: '#1E4D8B',     // Dark blue
-  newTestamentBg: '#E8F0F8',   // Light blue
-  newTestamentBorder: '#7BA8D1', // Medium blue
+  // Tab colors - Banking style
+  tabBg: '#FFFFFF',
+  tabActive: '#5B3BD6',        // Primary purple
+  tabInactive: '#9CA3AF',      // Muted gray
+
+  // Testament colors - Modern professional
+  oldTestament: '#5B3BD6',     // Purple
+  oldTestamentBg: '#F3E8FF',   // Light purple
+  oldTestamentBorder: '#D8B4FF', // Medium purple
+  newTestament: '#00C9D7',     // Cyan
+  newTestamentBg: '#E8F8FF',   // Light cyan
+  newTestamentBorder: '#80E9F0', // Medium cyan
+
+  // Status colors
+  success: '#10B981',          // Green
+  warning: '#F59E0B',          // Amber
+  error: '#EF4444',            // Red
+  info: '#3B82F6',             // Blue
 };
 
 // ====================================
@@ -93,11 +104,12 @@ export const SIZES = {
   xxl: 24,
   xxxl: 32,
   
-  // Border radius
-  radius: 8,
+  // Border radius - Modern banking style
   radiusSm: 4,
+  radius: 8,
   radiusMd: 12,
   radiusLg: 16,
+  radiusXl: 20,
   radiusFull: 999,
 };
 
@@ -110,30 +122,30 @@ export const SHADOW = {
     elevation: 0,
   },
   soft: {
-    shadowColor: '#000',
+    shadowColor: '#5B3BD6',
     shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.08,
-    shadowRadius: 3,
+    shadowOpacity: 0.06,
+    shadowRadius: 2,
     elevation: 2,
   },
   medium: {
-    shadowColor: '#000',
+    shadowColor: '#5B3BD6',
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.12,
-    shadowRadius: 6,
+    shadowOpacity: 0.08,
+    shadowRadius: 4,
     elevation: 4,
   },
   large: {
-    shadowColor: '#000',
+    shadowColor: '#5B3BD6',
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.15,
+    shadowOpacity: 0.1,
     shadowRadius: 8,
     elevation: 6,
   },
   strong: {
-    shadowColor: '#000',
+    shadowColor: '#5B3BD6',
     shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.16,
+    shadowOpacity: 0.12,
     shadowRadius: 12,
     elevation: 8,
   },
