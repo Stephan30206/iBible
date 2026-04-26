@@ -88,17 +88,17 @@ const styles = StyleSheet.create({
     paddingVertical: SIZES.s3,
     borderBottomWidth: 1,
     borderBottomColor: COLORS.borderLight,
-    backgroundColor: COLORS.background,
+    backgroundColor: COLORS.surface,
   },
   rowBookmarked: {
     backgroundColor: COLORS.accentSurface,
-    borderLeftWidth: 4,
+    borderLeftWidth: 3,
     borderLeftColor: COLORS.accent,
   },
   numBox: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
+    width: 32,
+    height: 32,
+    borderRadius: 8,
     backgroundColor: COLORS.surfaceAlt,
     alignItems: 'center',
     justifyContent: 'center',
@@ -110,8 +110,8 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.accent,
   },
   num: {
-    fontSize: 11,
-    fontWeight: '800',
+    fontSize: 12,
+    fontWeight: '700',
     color: COLORS.textMuted,
   },
   numActive: {
