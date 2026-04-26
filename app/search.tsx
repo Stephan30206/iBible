@@ -3,7 +3,6 @@ import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import React from 'react';
 import {
-    ActivityIndicator,
     FlatList,
     StyleSheet,
     Text,
@@ -12,6 +11,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import EmptyState from '../components/EmptyState';
+import LoadingSpinner from '../components/LoadingSpinner';
 import SearchBar from '../components/SearchBar';
 import { COLORS, FONTS, SHADOW, SIZES } from '../constants/theme';
 import { useBible } from '../hooks/useBible';
@@ -82,7 +82,7 @@ export default function SearchScreen() {
       {/* Résultats */}
       {isSearching ? (
         <View style={styles.loadingWrap}>
-          <ActivityIndicator color={COLORS.accent} size="large" />
+          <LoadingSpinner size="large" color={COLORS.primary} />
           <Text style={styles.loadingText}>Recherche en cours…</Text>
         </View>
       ) : query.length === 0 ? (
@@ -148,54 +148,47 @@ const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: COLORS.background },
 
   header: {
-    backgroundColor: COLORS.surface,
+    backgroundColor: COLORS.primary,
     paddingHorizontal: SIZES.s4,
     paddingTop: SIZES.s5,
-    paddingBottom: SIZES.s2,
-    borderBottomWidth: 1,
-    borderBottomColor: COLORS.border,
-    flexDirection: 'row',
-    alignItems: 'baseline',
-    gap: SIZES.s3,
+    paddingBottom: SIZES.s4,
   },
   title: {
     fontSize: SIZES.xxl,
-    fontFamily: FONTS.serif,
-    color: COLORS.textPrimary,
+    color: COLORS.white,
     fontWeight: '700',
   },
   sub: {
     fontSize: SIZES.sm,
-    color: COLORS.textMuted,
+    color: 'rgba(255,255,255,0.85)',
+    marginTop: SIZES.s1,
   },
 
   searchWrap: {
     paddingHorizontal: SIZES.s4,
     paddingVertical: SIZES.s3,
-    backgroundColor: COLORS.surface,
+    backgroundColor: COLORS.background,
   },
 
   filterRow: {
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: SIZES.s4,
-    paddingBottom: SIZES.s3,
+    paddingVertical: SIZES.s3,
     gap: SIZES.s2,
-    backgroundColor: COLORS.surface,
-    borderBottomWidth: 1,
-    borderBottomColor: COLORS.border,
+    backgroundColor: COLORS.background,
   },
   filterBtn: {
     paddingHorizontal: SIZES.s3,
-    paddingVertical: SIZES.s1 + 1,
-    borderRadius: SIZES.radiusFull,
-    backgroundColor: COLORS.surfaceAlt,
+    paddingVertical: SIZES.s2,
+    borderRadius: SIZES.radiusMd,
+    backgroundColor: COLORS.surface,
     borderWidth: 1,
     borderColor: COLORS.border,
   },
   filterBtnActive: {
-    backgroundColor: COLORS.accent,
-    borderColor: COLORS.accent,
+    backgroundColor: COLORS.primary,
+    borderColor: COLORS.primary,
   },
   filterText: { fontSize: SIZES.sm, color: COLORS.textMuted, fontWeight: '600' },
   filterTextActive: { color: COLORS.white },
@@ -210,58 +203,61 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    gap: SIZES.s3,
+    gap: SIZES.s5,
   },
-  loadingText: { fontSize: SIZES.md, color: COLORS.textMuted },
+  loadingText: { fontSize: SIZES.md, color: COLORS.textMuted, fontWeight: '500' },
 
   list: { padding: SIZES.s4, gap: SIZES.s3 },
 
   resultCard: {
     backgroundColor: COLORS.surface,
-    borderRadius: SIZES.radius,
+    borderRadius: SIZES.radiusLg,
     padding: SIZES.s4,
     borderWidth: 1,
     borderColor: COLORS.border,
+    shadowColor: COLORS.primary,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 2,
+    elevation: 1,
   },
   resultHeader: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: SIZES.s2,
+    marginBottom: SIZES.s3,
   },
   refBadge: {
     backgroundColor: COLORS.accentSurface,
     paddingHorizontal: SIZES.s2,
-    paddingVertical: 3,
-    borderRadius: SIZES.radius,
-    borderWidth: 1,
-    borderColor: COLORS.accentBorder,
+    paddingVertical: 4,
+    borderRadius: SIZES.radiusSm,
   },
-  refText: { fontSize: SIZES.xs, color: COLORS.accent, fontWeight: '800' },
+  refText: { fontSize: SIZES.xs, color: COLORS.accent, fontWeight: '700', textTransform: 'uppercase' },
   testamentDot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
+    width: 10,
+    height: 10,
+    borderRadius: 5,
   },
   resultText: {
     fontSize: SIZES.md,
-    fontFamily: FONTS.serif,
     color: COLORS.textPrimary,
     lineHeight: 24,
   },
   highlight: {
-    backgroundColor: '#F5D776',
-    borderRadius: 3,
+    backgroundColor: '#FCD34D',
+    borderRadius: 2,
     color: COLORS.textPrimary,
+    fontWeight: '600',
   },
   resultFooter: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginTop: SIZES.s2,
-    paddingTop: SIZES.s2,
+    marginTop: SIZES.s3,
+    paddingTop: SIZES.s3,
     borderTopWidth: 1,
     borderTopColor: COLORS.borderLight,
   },
-  resultFooterText: { fontSize: SIZES.xs, color: COLORS.textMuted },
+  resultFooterText: { fontSize: SIZES.xs, color: COLORS.textMuted, fontWeight: '500' },
 });
