@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import EmptyState from '../components/EmptyState';
+import LoadingSpinner from '../components/LoadingSpinner';
 import { COLORS, FONTS, SHADOW, SIZES } from '../constants/theme';
 import { useBible } from '../hooks/useBible';
 import { Book } from '../types/bible';
@@ -84,7 +85,8 @@ export default function BooksScreen() {
 
       {!isLoaded ? (
         <View style={styles.center}>
-          <Text style={styles.loadText}>Chargement…</Text>
+          <LoadingSpinner size="large" color={COLORS.primary} />
+          <Text style={styles.loadText}>Chargement des livres…</Text>
         </View>
       ) : filtered.length === 0 ? (
         <EmptyState
@@ -114,74 +116,76 @@ const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: COLORS.background },
 
   header: {
-    backgroundColor: COLORS.surface,
+    backgroundColor: COLORS.primary,
     paddingHorizontal: SIZES.s4,
     paddingTop: SIZES.s5,
-    paddingBottom: SIZES.s3,
-    borderBottomWidth: 1,
-    borderBottomColor: COLORS.border,
+    paddingBottom: SIZES.s4,
   },
   title: {
     fontSize: SIZES.xxl,
-    fontFamily: FONTS.serif,
-    color: COLORS.textPrimary,
+    color: COLORS.white,
     fontWeight: '700',
-    marginBottom: SIZES.s3,
+    marginBottom: SIZES.s4,
   },
   tabRow: {
     flexDirection: 'row',
-    backgroundColor: COLORS.surfaceAlt,
-    borderRadius: SIZES.radiusFull,
-    padding: 3,
+    backgroundColor: 'rgba(255,255,255,0.15)',
+    borderRadius: SIZES.radiusMd,
+    padding: 4,
+    gap: SIZES.s1,
   },
   tabBtn: {
     flex: 1,
     paddingVertical: SIZES.s2,
-    borderRadius: SIZES.radiusFull,
+    borderRadius: SIZES.radiusSm,
     alignItems: 'center',
   },
-  tabBtnActive: { backgroundColor: COLORS.accent },
-  tabText: { fontSize: SIZES.sm, color: COLORS.textMuted, fontWeight: '600' },
-  tabTextActive: { color: COLORS.white },
+  tabBtnActive: { backgroundColor: COLORS.white },
+  tabText: { fontSize: SIZES.sm, color: 'rgba(255,255,255,0.7)', fontWeight: '600' },
+  tabTextActive: { color: COLORS.primary },
 
-  list: { padding: SIZES.s4, gap: SIZES.s2 },
+  list: { padding: SIZES.s4, gap: SIZES.s3 },
   listHeader: {
     fontSize: SIZES.xs,
     color: COLORS.textMuted,
     fontWeight: '600',
     letterSpacing: 1,
     textTransform: 'uppercase',
-    marginBottom: SIZES.s2,
+    marginBottom: SIZES.s3,
   },
 
   card: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: COLORS.surface,
-    borderRadius: SIZES.radius,
+    borderRadius: SIZES.radiusLg,
     padding: SIZES.s3,
     borderWidth: 1,
     borderColor: COLORS.border,
     gap: SIZES.s3,
+    shadowColor: COLORS.primary,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 2,
+    elevation: 1,
   },
   badge: {
-    width: 46,
-    height: 46,
-    borderRadius: SIZES.radius,
+    width: 48,
+    height: 48,
+    borderRadius: SIZES.radiusMd,
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 1,
+    borderWidth: 0,
   },
-  badgeText: { fontSize: SIZES.sm, fontWeight: '800' },
+  badgeText: { fontSize: SIZES.sm, fontWeight: '700' },
   info: { flex: 1 },
   bookName: {
     fontSize: SIZES.md,
-    fontFamily: FONTS.serif,
     color: COLORS.textPrimary,
     fontWeight: '600',
   },
-  bookMeta: { fontSize: SIZES.xs, color: COLORS.textMuted, marginTop: 2 },
+  bookMeta: { fontSize: SIZES.xs, color: COLORS.textMuted, marginTop: 3, fontWeight: '400' },
 
-  center: { flex: 1, alignItems: 'center', justifyContent: 'center' },
-  loadText: { fontSize: SIZES.md, color: COLORS.textMuted },
+  center: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: SIZES.s5 },
+  loadText: { fontSize: SIZES.md, color: COLORS.textMuted, fontWeight: '500', marginTop: SIZES.s3 },
 });
