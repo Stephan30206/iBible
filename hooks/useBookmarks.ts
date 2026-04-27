@@ -1,4 +1,3 @@
-// hooks/useBookmarks.ts
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useCallback, useEffect, useState } from 'react';
 import { Bookmark, LastPosition } from '../types/bible';

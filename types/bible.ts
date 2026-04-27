@@ -1,5 +1,3 @@
-// types/bible.ts
-
 export interface Verse {
   verse: number;
   text: string;
@@ -46,4 +44,16 @@ export interface DailyVerse {
   verse: number;
   text: string;
   reference: string;
+}
+
+export interface HighlightColor {
+  name: string;
+  color: string;
+}
+
+export interface Highlight {
+  bookId: number;
+  chapter: number;
+  verse: number;
+  color: string;
 }

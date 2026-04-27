@@ -1,21 +1,13 @@
-// app/chapter/[id].tsx
 import { Ionicons } from '@expo/vector-icons';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import React, { useCallback, useEffect, useRef } from 'react';
-import {
-    Alert,
-    FlatList,
-    StatusBar,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
-} from 'react-native';
+import { Alert, FlatList, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import VerseItem from '../../components/VerseItem';
-import { COLORS, FONTS, SHADOW, SIZES } from '../../constants/theme';
+import { COLORS, SIZES } from '../../constants/theme';
 import { useBible } from '../../hooks/useBible';
 import { useBookmarks } from '../../hooks/useBookmarks';
+import { useHighlights } from '../../hooks/useHighlights';
 
 export default function ChapterScreen() {
   const { bookId, chapterNum } = useLocalSearchParams<{
@@ -26,27 +18,13 @@ export default function ChapterScreen() {
   const router = useRouter();
   const { getBook, getChapter } = useBible();
   const { isBookmarked, toggleBookmark, saveLastPosition } = useBookmarks();
+  const { getHighlightColor, setHighlight, removeHighlight } = useHighlights();
   const flatRef = useRef<FlatList>(null);
 
   const book = getBook(bookId ?? '1');
   const chapter = getChapter(bookId ?? '1', chapterNum ?? '1');
   const currentChapter = parseInt(chapterNum ?? '1');
 
-  // Debug logging
-  console.log('📖 Chapter loaded:', {
-    bookId,
-    chapterNum,
-    bookName: book?.name,
-    chapterFound: !!chapter,
-    versesCount: chapter?.verses?.length ?? 0,
-    firstVerse: chapter?.verses?.[0],
-  });
-
-  if (chapter) {
-    console.log('🔥 FULL CHAPTER DATA:', JSON.stringify(chapter, null, 2).substring(0, 500));
-  }
-
-  // Sauvegarder la position
   useEffect(() => {
     if (book && chapter) {
       saveLastPosition({
@@ -68,7 +46,6 @@ export default function ChapterScreen() {
     [bookId, router]
   );
 
-  // Écran d'erreur
   if (!book || !chapter) {
     return (
       <SafeAreaView style={styles.safe}>
@@ -146,7 +123,7 @@ export default function ChapterScreen() {
             <View style={styles.bannerLine} />
             <Text style={styles.bannerHint}>
               <Ionicons name="hand-left-outline" size={11} color={COLORS.textMuted} />
-              {' '}Appui long sur un verset pour le mettre en favori
+              {' '}Appuyez sur un verset pour les options
             </Text>
           </View>
         }
@@ -160,6 +137,9 @@ export default function ChapterScreen() {
               bookName={book.name}
               isBookmarked={isBookmarked(bookIdNum, currentChapter, item.verse)}
               onToggleBookmark={toggleBookmark}
+              highlightColor={getHighlightColor(bookIdNum, currentChapter, item.verse)}
+              onSetHighlight={(color) => setHighlight(bookIdNum, currentChapter, item.verse, color)}
+              onRemoveHighlight={() => removeHighlight(bookIdNum, currentChapter, item.verse)}
             />
           );
         }}

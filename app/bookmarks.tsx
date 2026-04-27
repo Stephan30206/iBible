@@ -1,18 +1,10 @@
-// app/bookmarks.tsx
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import React from 'react';
-import {
-    Alert,
-    FlatList,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View
-} from 'react-native';
+import { Alert, FlatList, Share, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import EmptyState from '../components/EmptyState';
-import { COLORS, FONTS, SHADOW, SIZES } from '../constants/theme';
+import { COLORS, SHADOW, SIZES } from '../constants/theme';
 import { useBookmarks } from '../hooks/useBookmarks';
 import { Bookmark } from '../types/bible';
 import { formatDate, truncate } from '../utils/helpers';
@@ -26,13 +18,16 @@ export default function BookmarksScreen() {
       'Supprimer le favori',
       `Retirer ${bm.reference} de vos favoris ?`,
       [
-        { text: 'Annuler', style: 'cancel' },
+        { text: 'Annuler', onPress: () => {}, style: 'cancel' },
         {
           text: 'Supprimer',
           style: 'destructive',
-          onPress: () => removeBookmark(bm.bookId, bm.chapter, bm.verse),
+          onPress: async () => {
+            await removeBookmark(bm.bookId, bm.chapter, bm.verse);
+          },
         },
-      ]
+      ],
+      { cancelable: false }
     );
   };
 
@@ -47,9 +42,19 @@ export default function BookmarksScreen() {
     });
   };
 
+  const handleShare = async (bm: Bookmark) => {
+    try {
+      await Share.share({
+        message: `"${bm.text}"\n\n— ${bm.reference}`,
+        title: 'Partager le verset',
+      });
+    } catch (error) {
+      console.error('Error sharing:', error);
+    }
+  };
+
   return (
     <SafeAreaView style={styles.safe} edges={['top']}>
-      {/* Header */}
       <View style={styles.header}>
         <View>
           <Text style={styles.title}>Favoris</Text>
@@ -57,12 +62,6 @@ export default function BookmarksScreen() {
             {bookmarks.length} verset{bookmarks.length !== 1 ? 's' : ''} sauvegardé{bookmarks.length !== 1 ? 's' : ''}
           </Text>
         </View>
-        {bookmarks.length > 0 && (
-          <View style={styles.countBadge}>
-            <Ionicons name="heart" size={14} color={COLORS.accent} />
-            <Text style={styles.countBadgeText}>{bookmarks.length}</Text>
-          </View>
-        )}
       </View>
 
       {bookmarks.length === 0 ? (
@@ -85,28 +84,36 @@ export default function BookmarksScreen() {
               onPress={() => goChapter(item)}
               activeOpacity={0.8}
             >
-              {/* Top bar */}
               <View style={styles.cardTop}>
                 <View style={styles.refRow}>
                   <View style={styles.refBadge}>
                     <Text style={styles.refText}>{item.reference}</Text>
                   </View>
                 </View>
-                <TouchableOpacity
-                  onPress={() => confirmRemove(item)}
-                  hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-                  style={styles.removeBtn}
-                >
-                  <Ionicons name="trash-outline" size={16} color={COLORS.textLight} />
-                </TouchableOpacity>
+                <View style={styles.actionButtons}>
+                  <TouchableOpacity
+                    onPress={() => handleShare(item)}
+                    hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}
+                    style={styles.shareBtn}
+                    activeOpacity={0.7}
+                  >
+                    <Ionicons name="share-social-outline" size={18} color={COLORS.primary} />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => confirmRemove(item)}
+                    hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}
+                    style={styles.removeBtn}
+                    activeOpacity={0.7}
+                  >
+                    <Ionicons name="trash-outline" size={18} color="#DC2626" />
+                  </TouchableOpacity>
+                </View>
               </View>
 
-              {/* Texte */}
               <Text style={styles.verseText}>
                 « {truncate(item.text, 120)} »
               </Text>
 
-              {/* Footer */}
               <View style={styles.cardFooter}>
                 {item.savedAt && (
                   <View style={styles.dateRow}>
@@ -149,22 +156,7 @@ const styles = StyleSheet.create({
     color: 'rgba(255,255,255,0.85)',
     marginTop: 4,
   },
-  countBadge: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 6,
-    backgroundColor: 'rgba(255,255,255,0.2)',
-    paddingHorizontal: SIZES.s3,
-    paddingVertical: SIZES.s2,
-    borderRadius: SIZES.radiusLg,
-    borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.3)',
-  },
-  countBadgeText: {
-    fontSize: SIZES.sm,
-    fontWeight: '700',
-    color: COLORS.white,
-  },
+
 
   list: { padding: SIZES.s4, gap: SIZES.s3 },
 
@@ -174,8 +166,6 @@ const styles = StyleSheet.create({
     padding: SIZES.s4,
     borderWidth: 1,
     borderColor: COLORS.border,
-    borderLeftWidth: 3,
-    borderLeftColor: COLORS.accent,
     shadowColor: COLORS.primary,
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.05,
@@ -196,8 +186,26 @@ const styles = StyleSheet.create({
     borderRadius: SIZES.radiusSm,
   },
   refText: { fontSize: SIZES.xs, color: COLORS.accent, fontWeight: '700', textTransform: 'uppercase' },
+  actionButtons: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: SIZES.s2,
+  },
+  shareBtn: {
+    width: 40,
+    height: 40,
+    borderRadius: SIZES.radiusMd,
+    backgroundColor: COLORS.accentSurface,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   removeBtn: {
-    padding: SIZES.s1,
+    width: 40,
+    height: 40,
+    borderRadius: SIZES.radiusMd,
+    backgroundColor: '#FEE2E2',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 
   verseText: {

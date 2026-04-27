@@ -1,4 +1,3 @@
-// app/books.tsx
 import { Ionicons } from '@expo/vector-icons';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import React, { useState } from 'react';
@@ -12,7 +11,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import EmptyState from '../components/EmptyState';
 import LoadingSpinner from '../components/LoadingSpinner';
-import { COLORS, FONTS, SHADOW, SIZES } from '../constants/theme';
+import { COLORS, SHADOW, SIZES } from '../constants/theme';
 import { useBible } from '../hooks/useBible';
 import { Book } from '../types/bible';
 
@@ -65,7 +64,6 @@ export default function BooksScreen() {
 
   return (
     <SafeAreaView style={styles.safe} edges={['top']}>
-      {/* Header */}
       <View style={styles.header}>
         <Text style={styles.title}>Livres</Text>
         <View style={styles.tabRow}>

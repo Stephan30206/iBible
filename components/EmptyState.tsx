@@ -1,8 +1,7 @@
-// components/EmptyState.tsx
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { COLORS, FONTS, SIZES } from '../constants/theme';
+import { COLORS, SIZES } from '../constants/theme';
 
 interface Props {
   icon: keyof typeof Ionicons.glyphMap;

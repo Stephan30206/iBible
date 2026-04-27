@@ -1,4 +1,3 @@
-// data/fallback.ts
 import { Book, DailyVerse } from '../types/bible';
 
 export const FALLBACK_DAILY_VERSES: DailyVerse[] = [
@@ -39,7 +38,6 @@ export const FALLBACK_DAILY_VERSES: DailyVerse[] = [
   },
 ];
 
-// Bible de démonstration avec vrais versets (Psaume 23 complet)
 export const DEMO_BIBLE: Book[] = [
   {
     id: 1, name: 'Genèse', abbreviation: 'Gen', testament: 'AT', category: 'Pentateuque',

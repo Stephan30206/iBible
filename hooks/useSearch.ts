@@ -1,4 +1,3 @@
-// hooks/useSearch.ts
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Book } from '../types/bible';
 

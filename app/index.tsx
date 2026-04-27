@@ -1,19 +1,10 @@
-// app/index.tsx
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import React, { useMemo } from 'react';
-import {
-  ActivityIndicator,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { ActivityIndicator, ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View, ImageBackground } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import DemoNotice from '../components/DemoNotice';
-import { COLORS, FONTS, SHADOW, SIZES } from '../constants/theme';
+import { COLORS, SHADOW, SIZES } from '../constants/theme';
 import { useBible } from '../hooks/useBible';
 import { useBookmarks } from '../hooks/useBookmarks';
 
@@ -54,21 +45,18 @@ export default function HomeScreen() {
 
   return (
     <SafeAreaView style={styles.safe} edges={['top']}>
-      <StatusBar barStyle="dark-content" backgroundColor={COLORS.background} />
+      <StatusBar barStyle="dark-content" backgroundColor={COLORS.primary} />
 
-      {/* ── Header ── */}
+      <View style={styles.gradientBg}>
+        <View style={styles.gradientLayer1} />
+        <View style={styles.gradientLayer2} />
+      </View>
+
       <View style={styles.header}>
         <View>
           <Text style={styles.appName}>iBible</Text>
           <Text style={styles.appSub}>La Parole de Dieu</Text>
         </View>
-        <TouchableOpacity
-          style={styles.bookmarkBadge}
-          onPress={() => router.push('/bookmarks')}
-        >
-          <Ionicons name="heart" size={16} color={COLORS.accent} />
-          <Text style={styles.bookmarkBadgeText}>{bookmarks.length}</Text>
-        </TouchableOpacity>
       </View>
 
       <ScrollView
@@ -78,7 +66,6 @@ export default function HomeScreen() {
       >
         {usingDemo && <DemoNotice />}
 
-        {/* ── Verset du jour ── */}
         <View style={[styles.verseCard, SHADOW.strong]}>
           <View style={styles.verseCardHeader}>
             <View style={styles.verseCardTagRow}>
@@ -109,7 +96,6 @@ export default function HomeScreen() {
           ) : null}
         </View>
 
-        {/* ── Continuer la lecture ── */}
         {lastPosition && (
           <TouchableOpacity
             style={[styles.continueCard, SHADOW.soft]}
@@ -129,7 +115,6 @@ export default function HomeScreen() {
           </TouchableOpacity>
         )}
 
-        {/* ── Testaments ── */}
         <Text style={styles.sectionTitle}>PARCOURIR</Text>
         <View style={styles.testamentRow}>
           <TouchableOpacity
@@ -167,7 +152,6 @@ export default function HomeScreen() {
           </TouchableOpacity>
         </View>
 
-        {/* ── Lectures rapides ── */}
         <Text style={styles.sectionTitle}>COMMENCER PAR</Text>
         <View style={styles.quickGrid}>
           {QUICK_LINKS.map((item, i) => (
@@ -186,32 +170,40 @@ export default function HomeScreen() {
           ))}
         </View>
 
-        {/* ── Stats ── */}
-        <View style={[styles.statsCard, SHADOW.soft]}>
-          {[
-            { val: bookmarks.length.toString(), label: 'Favoris', icon: 'heart' as const },
-            { val: books.length > 0 ? books.length.toString() : '66', label: 'Livres', icon: 'library' as const },
-            { val: '31K+', label: 'Versets', icon: 'text' as const },
-          ].map((stat, i) => (
-            <React.Fragment key={i}>
-              {i > 0 && <View style={styles.statDivider} />}
-              <View style={styles.stat}>
-                <Ionicons name={stat.icon} size={16} color={COLORS.accent} style={{ marginBottom: 4 }} />
-                <Text style={styles.statVal}>{stat.val}</Text>
-                <Text style={styles.statLabel}>{stat.label}</Text>
-              </View>
-            </React.Fragment>
-          ))}
-        </View>
       </ScrollView>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: COLORS.background },
-  scroll: { flex: 1 },
+  safe: { flex: 1, backgroundColor: '#FFFFFF' },
+  scroll: { flex: 1, zIndex: 10, position: 'relative' },
   content: { paddingBottom: 32 },
+
+  gradientBg: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: 0,
+  },
+  gradientLayer1: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    height: '40%',
+    backgroundColor: '#7C3AED',
+  },
+  gradientLayer2: {
+    position: 'absolute',
+    top: '40%',
+    left: 0,
+    right: 0,
+    height: '60%',
+    backgroundColor: '#FFFFFF',
+  },
 
   header: {
     flexDirection: 'row',
@@ -234,22 +226,6 @@ const styles = StyleSheet.create({
     marginTop: 4,
     letterSpacing: 0.5,
     fontWeight: '400',
-  },
-  bookmarkBadge: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 6,
-    backgroundColor: 'rgba(255,255,255,0.2)',
-    paddingHorizontal: SIZES.s3,
-    paddingVertical: SIZES.s2,
-    borderRadius: SIZES.radiusLg,
-    borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.3)',
-  },
-  bookmarkBadgeText: {
-    fontSize: SIZES.sm,
-    fontWeight: '700',
-    color: COLORS.white,
   },
 
   verseCard: {
@@ -439,22 +415,4 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
 
-  statsCard: {
-    flexDirection: 'row',
-    backgroundColor: COLORS.surface,
-    marginHorizontal: SIZES.s4,
-    borderRadius: SIZES.radiusLg,
-    padding: SIZES.s5,
-    borderWidth: 1,
-    borderColor: COLORS.border,
-    shadowColor: COLORS.primary,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.06,
-    shadowRadius: 4,
-    elevation: 2,
-  },
-  stat: { flex: 1, alignItems: 'center' },
-  statVal: { fontSize: SIZES.xl, fontWeight: '700', color: COLORS.primary },
-  statLabel: { fontSize: SIZES.xs, color: COLORS.textMuted, marginTop: 4, fontWeight: '500' },
-  statDivider: { width: 1, backgroundColor: COLORS.border, marginVertical: SIZES.s2 },
 });

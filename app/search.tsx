@@ -1,19 +1,12 @@
-// app/search.tsx
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import React from 'react';
-import {
-    FlatList,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View
-} from 'react-native';
+import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import EmptyState from '../components/EmptyState';
 import LoadingSpinner from '../components/LoadingSpinner';
 import SearchBar from '../components/SearchBar';
-import { COLORS, FONTS, SHADOW, SIZES } from '../constants/theme';
+import { COLORS, SHADOW, SIZES } from '../constants/theme';
 import { useBible } from '../hooks/useBible';
 import { SearchFilter, SearchResult, useSearch } from '../hooks/useSearch';
 import { highlightText } from '../utils/helpers';

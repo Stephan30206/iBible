@@ -1,5 +1,3 @@
-// utils/helpers.ts
-
 export interface TextPart {
   text: string;
   highlight: boolean;
@@ -39,9 +37,12 @@ export function formatDate(isoString: string): string {
   });
 }
 
-export function truncate(text: string, maxLength: number = 90): string {
+export function truncate(text: string | undefined, maxLength: number) {
+  if (!text) return ''; 
+
   if (text.length <= maxLength) return text;
-  return text.slice(0, maxLength) + '…';
+
+  return text.substring(0, maxLength) + '...';
 }
 
 export function getDayBasedIndex(arrayLength: number): number {
